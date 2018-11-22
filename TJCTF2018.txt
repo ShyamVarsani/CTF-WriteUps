@@ -1,0 +1,9 @@
+Wierd Audio Circuit
+Load up the wav in audacity.
+AM  modulated audio - we can see the carrier wave at 10Khz
+
+Demodulate the audio by:
+Effect > Nyquist Prompt > (lowpass8 (mult *track* (hzosc 10000)) 10000)
+
+When the sound is played after demodulation, We can hear the flag.
+

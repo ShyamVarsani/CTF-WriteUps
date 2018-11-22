@@ -1,0 +1,37 @@
+Hardshell - Forensics 2
+---
+After a recent hack, a laptop was seized and subsequently analyzed. The victim of the hack? An innocent mexican restaurant. During the investigation they found this suspicous file. Can you find any evidence that the owner of this laptop is the culprit?
+---
+
+We are given a zip file
+Password protected > used fcrackzip -v -D -u -p /usr/share/wordlists/rockyou.txt hardshells > PASSWORD FOUND!!!!: pw == tacos
+Extracting the file gives us a Minix Filesystem > d: Minix filesystem, V1, 30 char names, 20 zones
+
+Then mount the file d >> mount -t minix d /mnt
+
+traverse to /mnt we have a file in there called 'dat' > dat : data
+
+Open the dat with bless hexeditor > there is a malformed png header > 89 50 55 47 > .PUG
+When changing the header to 89 50 4E 47 .. we have a file with a valid png header. 
+
+save the file and it becomes a png img. 
+Open the png and the flag is in there! 
+
+flag : IceCTF{look_away_i_am_hacking}
+
+---
+---
+
+Drumbone - Steg 1
+---
+I joined a couple of hacking channels on IRC and I started recieving these strange messages. Someone sent me this image. Can you figure out if there's anything suspicous hidden in it?
+---
+
+Given a png > use stegsolve http://www.caesum.com/handbook/Stegsolve.jar to pull out a QR code from the image > open image in gimp > Select>By Colour > Grow > 4 Pixels > fill in the selection with black -- enlarging the dots
+To decode the QR code > sudo apt-get install zbar-tools > zbarimg solved.png 
+
+QR-Code:IceCTF{Elliot_has_been_mapping_bits_all_day}
+
+---
+---
+

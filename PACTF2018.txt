@@ -1,0 +1,171 @@
+
+
+go git it -
+The branch was deleted, so had to recover it
+git fsck --no-reflog | awk '/dangling commit/ {print $3}'
+
+3x3rc1z3_caut10n_wh3n_d3tach1ng_ur_h3ad
+
+---
+open sourcey 2018 - 
+Download chromium source and ack for flag and pactf
+pactf-flag-4boxdpa21ogonzkcrs9p.com
+
+---
+credit card leak - 
+Credit card validation works through lung algorithm
+Found a python code to validate the numbers and made a bash script using this program: https://gist.github.com/thinkphp/5107438
+flag - 8692015931457397
+
+Luhn Python checksum for credit card validation
+https://gist.github.com/thinkphp/5107438
+
+---
+security through obscurity? - 
+Found this through googling the cipher text: https://gist.github.com/TheZ3ro/572ef81c0f20bf9c4c435b32a62a7056
+the flag is chesternez 
+
+navajo.py
+https://gist.github.com/TheZ3ro/572ef81c0f20bf9c4c435b32a62a7056
+
+---
+A picture is a thousand words - 
+strings image | grep flag
+
+flag_is_DjKVIXXQRZZrrAd
+
+---
+bad melody - 
+Opened(import midi) up the file with audacity and the flag was there in the audio
+
+write your own music
+
+---
+straight from the emperor - 
+used cyberchef to find out the key is 21 but the numbers also need to be rotated
+it_is_onl3_uphill_from_here_68bcbcabc7
+'3' will change to 'y' which is 5 character rotation backwards, so all the numbers got rotated backwards by 5 and there's the flag
+
+it_is_only_uphill_from_here_1367675672
+
+---
+Third eye -
+Zero width chars in the sourcode- copy the zwc's strings into cyberchef > unescape the unicode characters> 
+>which gives the hidden characters in unicode> remove the plaintext word> each u/200b and u/200c are assigned either a 0 or 1> from binary spits out flag
+
+what_else_lurks_beneath_the_eye
+
+
+---
+who said it -
+
+gpg --verify <message/sigfile> -  returns RSA key <A700B73709DA056D64E63C884CD03F6EFD23E1E9>
+gpg --keyserver https://pgp.mit.edu/ --search-keys A700B73709DA056D64E63C884CD03F6EFD23E1E9 -- this returns the following:
+
+
+"gpg: data source: https://pgp.mit.edu:443
+(1)	Oxford Automata (the_real_answer_is_always_in_the_comments) <oxfordaut
+	  4096 bit RSA key 4CD03F6EFD23E1E9, created: 2018-03-19
+Keys 1-1 of 1 for "A700B73709DA056D64E63C884CD03F6EFD23E1E9"."
+
+---
+Open Sourcery 
+
+downloaded the chromium source code off github > cd into chromium >  ack pactf *
+
+returns --  27102:    { "name": "pactf-flag-4boxdpa21ogonzkcrs9p.com", "policy": "bulk-18-weeks", "mode": "force-https", "include_subdomains": true },
+
+
+---
+
+Caesar Cipher?
+
+5:6 1139:4 1620:3 172:4 > corresponds to Shakespears Julius Caesar play - https://www.opensourceshakespeare.org
+
+the key-value pairs == <line>:<word in line>
+
+flag >> the answer is Cassius
+
+
+---------
+
+ROUND 2
+
+its in , if 
+exiftool on the image
+Stitching Software field gives flag of:  big_brother_is_looking_at_your_photos
+
+---
+
+Redacted
+copy paste all the redacted text off the pdf. 
+The flag is `b3_car3ful_0r_y0ur_l3ak_m1ght_l3ak`.
+
+---
+
+Am i pwned?
+
+get given the hash of eca065fba51916821eb7274c786c67d9
+bang it into crackstation and it gives us the flag of : lmaoez
+
+---
+
+AI
+
+jsfuck - decoded via http://codertab.com/jsunfuck
+yeilds: Congrats! You've uncovered the truth. Now go here: ibarakaiev.shpp.me/pactf_s7fj43/ai.zip
+
+found this in the script.js within the ai.zip:
+The key is now stored securely in ("http://ibarakaiev.shpp.me/pactf_s7fj43/key_%d.txt"
+
+used burp intruder to bruteforce the key in the url ... http://ibarakaiev.shpp.me/pactf_s7fj43/key_120.txt > produced a result
+
+convert the cipher text given to 5bit binary
+from binary to text gives us the flag of : doggo
+
+---
+
+library of babel
+
+get given an mp4 with barcodes playing
+extract the frames/barcodes using ffmpeg > ffmpeg -r 1 file.mp4 -r 1 "$filename%03d.png
+zxing > https://github.com/dlenski/python-zxing - pip3 install zxing
+
+
+used """eqvzb"" w-3, s-5, v-25, p-248" from the decoded barcodes on https://libraryofbabel.info to get the flag of: 
+congrats, your key is averyunobviouskey.    
+
+
+---
+
+wakanda problem is this?
+
+get given a jpg
+bin walk the jpg - gives us 2 jpg photos 
+hint is the use bytes in the second photo
+strings the extracted 2nd image > to get the flag{wakanda4eva}
+
+---
+
+hashmaster
+
+created a keyspace
+nested for loops to brute force the hash of 293366475
+have added the hash_it_bruteforcer into the write-ups folder for reference
+
+---
+
+needle in a haystack
+
+unescape all the unicode characters
+you have a bunch of line feed unicode characters - u000A
+look for more unicode characters by looking for more back slashes '\'
+you get the flag "the flag is in plain sight"
+
+---
+
+zip zap zog
+
+decompressed a zlib file with a python script that recursively decompresses the lib
+breaks when the file becomes simply 'data'
+when you cat the data file and gives you the flag - Gotza_Makes_1T_V_small_1367806744 
